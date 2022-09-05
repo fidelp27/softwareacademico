@@ -8,10 +8,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState('');
   const [token, setToken] = useState(localStorage.getItem('token'));
   const navigate = useNavigate();
-<<<<<<< HEAD
-  console.log(isAuth);
-=======
->>>>>>> 23ebe46 (add interest)
 
   const logOut = () => {
     setIsAuth(false);

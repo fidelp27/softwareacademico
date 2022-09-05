@@ -3,29 +3,6 @@ import axios from 'axios';
 export const CustomerContext = createContext();
 
 const CustomerProvider = ({ children }) => {
-<<<<<<< HEAD
-  // const [clients, setClients] = useState([]);
-
-  // const getClients = () => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_API_ENDPOINT}api/Intereses/Listado`)
-  //     .then((res) => console.log(res))
-  //     .catch((error) => console.log(error));
-  // };
-
-  // useEffect(() => {
-  //   getClients();
-  // }, []);
-
-  return (
-    <CustomerContext.Provider value={{}}>{children}</CustomerContext.Provider>
-  );
-};
-
-// export function useClients() {
-//   return useContext(CustomerContext).clients;
-// }
-=======
   const [interest, setInterest] = useState([]);
 
   const getInterest = () => {
@@ -61,5 +38,4 @@ export function useInterest() {
   return useContext(CustomerContext).interest;
 }
 
->>>>>>> 23ebe46 (add interest)
 export default CustomerProvider;
