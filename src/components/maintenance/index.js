@@ -4,10 +4,12 @@ import * as Yup from 'yup';
 import { v4 as uuidv4 } from 'uuid';
 import './maintenance.css';
 import ButtonCreate from '../clients/buttonAction/create';
+import { useInterest } from '../../context/customerContext';
 
 const FormCreateClient = () => {
   const code = uuidv4();
   const date = new Date().toLocaleDateString('fr-CA');
+  const intereses = useInterest();
   return (
     <Formik
       initialValues={{
@@ -22,7 +24,7 @@ const FormCreateClient = () => {
         sexo: '',
         resennaPersonal: '',
         imagen: '',
-        interesesFK: code,
+        interesesFK: '',
         usuarioId: localStorage.getItem('user'),
       }}
       validationSchema={Yup.object({
@@ -140,6 +142,18 @@ const FormCreateClient = () => {
               <ErrorMessage name="sexo">
                 {(msg) => <div className="error">{msg}</div>}
               </ErrorMessage>
+            </div>
+            <div className="input-group input-group--select">
+              <Field name="interesesFK" as="select">
+                <option value="" disabled>
+                  Interés
+                </option>
+                {React.Children.toArray(
+                  intereses.map((elem) => {
+                    return <option value={elem.id}>{elem.descripcion} </option>;
+                  })
+                )}
+              </Field>
             </div>
             <div className="input-group">
               <Field
