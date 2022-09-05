@@ -7,7 +7,6 @@ import ButtonCreate from '../clients/buttonAction/create';
 import { useInterest } from '../../context/customerContext';
 
 const FormCreateClient = () => {
-  const code = uuidv4();
   const date = new Date().toLocaleDateString('fr-CA');
   const intereses = useInterest();
   return (

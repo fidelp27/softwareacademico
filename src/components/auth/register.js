@@ -9,6 +9,52 @@ import 'react-toastify/dist/ReactToastify.css';
 import './auth.css';
 
 const Register = () => {
+  const onRegister = async (values) => {
+    let data = JSON.stringify({
+      username: values.usuario,
+      email: values.email,
+      password: values.contraseña,
+    });
+
+    let config = {
+      method: 'post',
+      url: `${process.env.REACT_APP_API_ENDPOINT}api/Authenticate/register`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    };
+    const res = await axios(config);
+    return res;
+  };
+
+  const validationSuccess = async (values) => {
+    try {
+      const response = await onRegister(values);
+      response.status === 200 &&
+        toast.success('Usuario creado exitosamente', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+    } catch (error) {
+      error &&
+        toast.error('Usuario ya existente', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+    }
+  };
+
   return (
     <Formik
       initialValues={{ usuario: '', contraseña: '', email: '' }}
@@ -27,47 +73,7 @@ const Register = () => {
           .required('Campo obligatorio'),
       })}
       onSubmit={(values, { resetForm }) => {
-        let data = JSON.stringify({
-          username: values.usuario,
-          email: values.email,
-          password: values.contraseña,
-        });
-
-        let config = {
-          method: 'post',
-          url: `${process.env.REACT_APP_API_ENDPOINT}api/Authenticate/register`,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          data: data,
-        };
-
-        axios(config)
-          .then(function (response) {
-            response.status === 200 &&
-              toast.success('Usuario creado exitosamente', {
-                position: 'top-center',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              });
-          })
-          .catch(function (error) {
-            error &&
-              toast.error('Usuario ya existente', {
-                position: 'top-center',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              });
-          });
-
+        validationSuccess(values);
         resetForm();
       }}
     >

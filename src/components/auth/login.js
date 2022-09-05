@@ -13,6 +13,40 @@ const Login = () => {
   const navigate = useNavigate();
   const setToken = useSetToken();
   const setUser = useSetUser();
+
+  const getAuth = async (values) => {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_ENDPOINT}api/Authenticate/login`,
+      {
+        username: values.usuario,
+        password: values.contraseña,
+      }
+    );
+    return res;
+  };
+
+  const saveLocalStorage = async (values) => {
+    try {
+      const res = await getAuth(values);
+      localStorage.setItem('token', res?.data?.token);
+      localStorage.setItem('user', res?.data?.username);
+      setToken(localStorage.getItem('token'));
+      setUser(localStorage.getItem('user'));
+      navigate('/', { replace: true });
+    } catch (error) {
+      error &&
+        toast.error('Usuario no autorizado, por favor regístrate', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+    }
+  };
+
   return (
     <Formik
       initialValues={{ usuario: '', contraseña: '' }}
@@ -21,30 +55,7 @@ const Login = () => {
         contraseña: Yup.string().required('Campo obligatorio'),
       })}
       onSubmit={(values, { resetForm }) => {
-        axios
-          .post(`${process.env.REACT_APP_API_ENDPOINT}api/Authenticate/login`, {
-            username: values.usuario,
-            password: values.contraseña,
-          })
-          .then((res) => {
-            localStorage.setItem('token', res?.data?.token);
-            localStorage.setItem('user', res?.data?.username);
-            setToken(localStorage.getItem('token'));
-            setUser(localStorage.getItem('user'));
-            navigate('/', { replace: true });
-          })
-          .catch((error) => {
-            error &&
-              toast.error('Usuario no autorizado, por favor regístrate', {
-                position: 'top-center',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              });
-          });
+        saveLocalStorage(values);
         resetForm();
       }}
     >
