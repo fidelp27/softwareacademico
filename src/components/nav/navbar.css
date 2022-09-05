@@ -1,0 +1,30 @@
+.nav-container {
+    width: 100vw;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--dark);
+    color: var(--soft);
+}
+
+.nav-container h1 {
+    margin-left: 2rem;
+}
+
+.user-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: var(--sm);
+    font-weight: bold;
+}
+
+.user-container .user-navbar {
+    margin: 0 1rem;
+}
+
+.user-container img {
+    margin-right: 1rem;
+    cursor: pointer;
+}

@@ -1,38 +1,32 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;700&family=Raleway&display=swap');
+
+:root {
+  --primary: #344955;
+  --secondary: #F9AA33;
+  --dark: #232F34;
+  --soft: #B0BEC5;
+  --error: #B00020;
+  --background: #ECEFF1;
+  --white: #FFFFFF;
+  --black: #000000;
+  --xs: 10px;
+  --sm: 14px;
+  --md: 16px;
+  --lg: 18px;
+  --xl: 32px;
+  --border-radius: .5rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  box-sizing: border-box;
+  font-family: Lato, sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+.container-view-content {
+
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  margin: 0;
+  padding: 0;
 }

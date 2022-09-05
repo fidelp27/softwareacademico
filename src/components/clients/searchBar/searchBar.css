@@ -1,0 +1,17 @@
+.searchBar {
+    width: 500px;
+    background-color: var(--background);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin: 0 auto;
+}
+
+.search-container {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}

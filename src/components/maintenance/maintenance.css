@@ -1,0 +1,61 @@
+.form-container--data {
+    width: calc(100vw - 300px);
+}
+
+.form-container--data .form {
+    width: calc(100vw - 300px);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+}
+
+.form-container--data .form .input-group {
+    width: 300px;
+
+}
+
+.form-container--data .form .input-group .input {
+    width: 250px;
+    padding: 1rem;
+    border: none;
+    background-color: var(--background);
+    border-radius: var(--border-radius);
+    margin: .6rem 0;
+}
+
+.form-container--data .form .input-group .error {
+    color: var(--error);
+    font-size: var(--xs);
+}
+
+
+
+.form-container--data .form .input-group .input-textarea {
+    width: 860px;
+    height: 100px;
+}
+
+.form-container--data .form .input-group--textarea {
+    width: 100%;
+}
+
+.form-container--data .form .input-group--select label {
+    margin-right: .5rem;
+    margin-left: 0;
+}
+
+.form-container--data .form .input-group--select select {
+    width: 250px;
+    padding: 1rem;
+    border: none;
+    background-color: var(--background);
+    border-radius: var(--border-radius);
+    margin: .6rem 0;
+}
+
+.css-e53awj-MuiStack-root {
+    position: absolute;
+    top: 210px;
+    right: 40px;
+}

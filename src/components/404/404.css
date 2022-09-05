@@ -1,0 +1,12 @@
+.container-404 {
+    width: calc(100vw - 300px);
+    height: calc(100vh - 70px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-404 img {
+    width: 300px;
+    height: 300px;
+}

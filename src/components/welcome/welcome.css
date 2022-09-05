@@ -1,0 +1,13 @@
+.welcome-container {
+    width: calc(100vw - 300px);
+    height: calc(100vh - 70px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background);
+    color: var(--soft);
+}
+
+.welcome {
+    color: var(--dark);
+}

@@ -1,0 +1,77 @@
+.form-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+.form-container--info {
+    background-color: var(--primary);
+    padding: 4rem;
+    border-radius: var(--border-radius);
+    width: 400px;
+}
+
+.form-container--info h1 {
+    color: var(--white);
+    text-align: center;
+}
+
+.form-container--info .form {
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
+
+}
+
+.form-container--info .form .label {
+    font-size: var(--lg);
+    margin: .5rem 0;
+    color: var(--soft)
+}
+
+.form-container--info .form .input {
+    background-color: var(--background);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: .5rem;
+}
+
+.form-container--info .form .error {
+    font-size: var(--xs);
+    color: var(--error);
+    margin: .5rem 0;
+    font-weight: bolder;
+    letter-spacing: .1rem;
+}
+
+.form-container--info .form .button {
+    background-color: var(--secondary);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    border: none;
+    color: var(--dark);
+    font-weight: bold;
+    margin-top: .7rem;
+    cursor: pointer;
+}
+
+.link-auth {
+    font-size: var(--sm);
+    margin-top: .5rem;
+}
+
+.link-auth a {
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--dark);
+    margin: 0 .5rem;
+    transition: 1s;
+
+}
+
+.link-auth a:hover {
+    text-decoration: underline;
+}
