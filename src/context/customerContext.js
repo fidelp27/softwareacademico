@@ -1,34 +1,35 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import { getClients, getInterest } from '../helpers';
 export const CustomerContext = createContext();
 
 const CustomerProvider = ({ children }) => {
   const [interest, setInterest] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [show, setShow] = useState(false);
+  const [filterClients, setFilterClients] = [];
+  const [searchClient, setSearchClient] = useState('');
 
-  const getInterest = () => {
-    let config = {
-      method: 'get',
-      url: `${process.env.REACT_APP_API_ENDPOINT}api/Intereses/Listado`,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      },
-    };
-
-    axios(config)
-      .then(function (response) {
-        setInterest(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const renderClients = async () => {
+    try {
+      const res = await getClients();
+      return setClients(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   useEffect(() => {
-    getInterest();
+    getInterest(setInterest);
+  }, []);
+
+  useEffect(() => {
+    renderClients();
   }, []);
 
   return (
-    <CustomerContext.Provider value={{ interest }}>
+    <CustomerContext.Provider
+      value={{ interest, clients, renderClients, show, setShow }}
+    >
       {children}
     </CustomerContext.Provider>
   );
@@ -36,6 +37,18 @@ const CustomerProvider = ({ children }) => {
 
 export function useInterest() {
   return useContext(CustomerContext).interest;
+}
+export function useClients() {
+  return useContext(CustomerContext).clients;
+}
+export function useRenderClients() {
+  return useContext(CustomerContext).renderClients;
+}
+export function useShow() {
+  return useContext(CustomerContext).show;
+}
+export function useSetShow() {
+  return useContext(CustomerContext).setShow;
 }
 
 export default CustomerProvider;

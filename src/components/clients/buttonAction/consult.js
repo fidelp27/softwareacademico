@@ -5,12 +5,16 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 
-export default function ButtonActions({ btn1, btn2 }) {
+export default function ButtonActions({ btn1, btn2, fn }) {
   const navigate = useNavigate();
 
   return (
     <Stack direction="row" spacing={2}>
-      <Button variant="outlined" startIcon={<AddCircleOutlineIcon />}>
+      <Button
+        variant="outlined"
+        startIcon={<AddCircleOutlineIcon />}
+        onClick={fn}
+      >
         {btn1}
       </Button>
       <Button

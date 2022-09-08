@@ -7,6 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useClients } from '../../../context/customerContext';
+import { useEffect } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { deleteClient, getClients } from '../../../helpers';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -15,6 +20,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+  },
+  svg: {
+    cursor: 'pointer',
+    margin: '0 5px',
   },
 }));
 
@@ -29,46 +38,81 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
+  id: string,
+  identificacion: number,
+  nombre: string,
+  apellidos: string,
+  acciones: string
 ) {
-  return { name, calories, fat, carbs, protein };
+  return { id, identificacion, nombre, apellidos, acciones: id };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+const rows = [];
 
 export default function TableClients() {
+  const clients = useClients();
+  console.log(clients);
+
+  // const headersTable = [
+  //   ...new Set(
+  //     React.Children.toArray(clients.map((elem) => Object.keys(elem)))
+  //   ),
+  // ];
+
+  const onDelete = async (id) => {
+    try {
+      const res = await deleteClient(id);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const renderTable = async () => {
+    const res = await getClients();
+    React.Children.toArray(
+      clients.map((client) => {
+        return rows.push(
+          createData(
+            client.id,
+            client.identificacion,
+            client.nombre,
+            client.apellidos
+          )
+        );
+      })
+    );
+  };
+  useEffect(() => {
+    renderTable();
+  }, []);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell>ID</StyledTableCell>
+            <StyledTableCell align="center">IDENTIFICACION</StyledTableCell>
+            <StyledTableCell align="center">NOMBRE</StyledTableCell>
+            <StyledTableCell align="center">APELLIDO</StyledTableCell>
+            <StyledTableCell align="center">ACCIONES</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">
+                {row.identificacion}
+              </StyledTableCell>
+              <StyledTableCell align="right">{row.nombre}</StyledTableCell>
+              <StyledTableCell align="right">{row.apellidos}</StyledTableCell>
+              <StyledTableCell align="center">
+                <EditIcon onClick={console.log('hola')} />
+                <DeleteIcon onClick={() => onDelete(row.acciones)} />
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

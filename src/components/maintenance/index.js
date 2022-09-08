@@ -1,21 +1,42 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { v4 as uuidv4 } from 'uuid';
 import './maintenance.css';
 import ButtonCreate from '../clients/buttonAction/create';
-import { useInterest } from '../../context/customerContext';
+import { useInterest, useRenderClients } from '../../context/customerContext';
+import { postCreateClient } from '../../helpers';
+import { ToastContainer, toast } from 'react-toastify';
 
 const FormCreateClient = () => {
   const date = new Date().toLocaleDateString('fr-CA');
   const intereses = useInterest();
+  const renderClients = useRenderClients();
+
+  const createClient = async (values) => {
+    try {
+      const res = await postCreateClient(values);
+      res.status === 200 &&
+        toast.success('Cliente creado satisfactoriamente', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Formik
       initialValues={{
         nombre: '',
-        apellido: '',
+        apellidos: '',
         identificacion: '',
-        telefonoCelular: '',
+        celular: '',
         otroTelefono: '',
         direccion: '',
         fNacimiento: '',
@@ -23,21 +44,21 @@ const FormCreateClient = () => {
         sexo: '',
         resennaPersonal: '',
         imagen: '',
-        interesesFK: '',
-        usuarioId: localStorage.getItem('user'),
+        interesFK: '',
+        usuarioId: localStorage.getItem('userid'),
       }}
       validationSchema={Yup.object({
         nombre: Yup.string()
           .required('Campo obligatorio')
           .max(50, 'Este campo admite hasta 50 caracteres'),
-        apellido: Yup.string()
+        apellidos: Yup.string()
           .required('Campo obligatorio')
           .max(100, 'Este campo admite hasta 100 caracteres'),
         identificacion: Yup.string()
           .matches(/^[0-9]+$/, 'Este campo solo admite números')
           .required('Campo obligatorio')
           .max(20, 'Este campo admite hasta 20 caracteres'),
-        telefonoCelular: Yup.string()
+        celular: Yup.string()
           .required('Campo obligatorio')
           .max(20, 'Este campo admite hasta 20 caracteres'),
         otroTelefono: Yup.string()
@@ -51,14 +72,14 @@ const FormCreateClient = () => {
         sexo: Yup.string()
           .required('Campo obligatorio')
           .max(1, 'Solo admite una letra'),
-        resenaPersonal: Yup.string().max(
+        resennaPersonal: Yup.string().max(
           200,
           'Este campo admite hasta 200 caracteres'
         ),
       })}
       onSubmit={(values, { resetForm }) => {
-        console.log(values);
-
+        createClient(values);
+        renderClients();
         resetForm();
       }}
     >
@@ -78,7 +99,7 @@ const FormCreateClient = () => {
             </div>
             <div className="input-group">
               <Field
-                name="apellido"
+                name="apellidos"
                 type="text"
                 className="input"
                 placeholder="Apellido*"
@@ -100,12 +121,12 @@ const FormCreateClient = () => {
             </div>
             <div className="input-group">
               <Field
-                name="telefonoCelular"
+                name="celular"
                 type="tel"
                 className="input"
                 placeholder="Teléfono celular*"
               />
-              <ErrorMessage name="telefonoCelular">
+              <ErrorMessage name="celular">
                 {(msg) => <div className="error">{msg}</div>}
               </ErrorMessage>
             </div>
@@ -143,7 +164,7 @@ const FormCreateClient = () => {
               </ErrorMessage>
             </div>
             <div className="input-group input-group--select">
-              <Field name="interesesFK" as="select">
+              <Field name="interesFK" as="select">
                 <option value="" disabled>
                   Interés
                 </option>
@@ -178,6 +199,17 @@ const FormCreateClient = () => {
             </div>
             <ButtonCreate />
           </Form>
+          <ToastContainer
+            position="top-center"
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />{' '}
         </div>
       </div>
     </Formik>

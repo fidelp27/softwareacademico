@@ -8,6 +8,10 @@
     color: var(--soft);
 }
 
+.nav-container .menu-icon {
+    display: none;
+}
+
 .nav-container h1 {
     margin-left: 2rem;
 }
@@ -27,4 +31,20 @@
 .user-container img {
     margin-right: 1rem;
     cursor: pointer;
+}
+
+@media (max-width: 640px) {
+    .nav-container {
+        justify-content: space-between;
+    }
+
+    .nav-container h1 {
+        margin: 0;
+    }
+
+    .nav-container .menu-icon {
+        display: block;
+        margin-left: 2rem;
+    }
+
 }

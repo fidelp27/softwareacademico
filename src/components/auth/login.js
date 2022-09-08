@@ -2,34 +2,24 @@ import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './auth.css';
 import { useSetToken, useSetUser } from '../../context/authContext';
-import ButtonCreate from '../clients/buttonAction/create';
+import { getAuth } from '../../helpers';
 
 const Login = () => {
   const navigate = useNavigate();
   const setToken = useSetToken();
   const setUser = useSetUser();
 
-  const getAuth = async (values) => {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API_ENDPOINT}api/Authenticate/login`,
-      {
-        username: values.usuario,
-        password: values.contraseña,
-      }
-    );
-    return res;
-  };
-
   const saveLocalStorage = async (values) => {
     try {
       const res = await getAuth(values);
+      console.log(res);
       localStorage.setItem('token', res?.data?.token);
       localStorage.setItem('user', res?.data?.username);
+      localStorage.setItem('userid', res?.data?.userid);
       setToken(localStorage.getItem('token'));
       setUser(localStorage.getItem('user'));
       navigate('/', { replace: true });

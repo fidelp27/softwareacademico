@@ -11,3 +11,11 @@
 .welcome {
     color: var(--dark);
 }
+
+@media (max-width: 640px) {
+
+    .welcome-container {
+        width: 100vw;
+
+    }
+}

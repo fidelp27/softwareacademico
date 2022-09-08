@@ -6,8 +6,8 @@ import Error404 from './components/404';
 import Welcome from './components/welcome';
 import Navbar from './components/nav';
 import AsideMenu from './components/aside/aside';
-import ViewClients from './components/clients/viewClients.js';
 import CreateClients from './components/createClient/index';
+import ViewClients from './views/viewClients.js';
 
 export const RequiredAuth = ({ children }) => {
   if (!localStorage.getItem('token')) {
