@@ -75,3 +75,9 @@
 .link-auth a:hover {
     text-decoration: underline;
 }
+
+.form-container--info .form .label-checkbox {
+    display: flex;
+    align-items: center;
+    font-size: var(--sm);
+}

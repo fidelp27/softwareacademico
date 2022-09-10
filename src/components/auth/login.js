@@ -11,6 +11,7 @@ import {
   useRenderClients,
   useSetInterest,
 } from '../../context/customerContext';
+import { useState } from 'react';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,6 +23,10 @@ const Login = () => {
   const getListInterest = async () => {
     const resp = await getInterest();
     setInterest(resp);
+  };
+
+  const rememberUser = (values) => {
+    values.remember && localStorage.setItem('userName', values.usuario);
   };
 
   const saveLocalStorage = async (values) => {
@@ -51,13 +56,18 @@ const Login = () => {
 
   return (
     <Formik
-      initialValues={{ usuario: '', contraseña: '' }}
+      initialValues={{
+        usuario: localStorage.getItem('userName') || '',
+        contraseña: '',
+        remember: false,
+      }}
       validationSchema={Yup.object({
         usuario: Yup.string().required('Campo obligatorio'),
         contraseña: Yup.string().required('Campo obligatorio'),
       })}
       onSubmit={(values, { resetForm }) => {
         saveLocalStorage(values);
+        rememberUser(values);
         resetForm();
       }}
     >
@@ -84,6 +94,11 @@ const Login = () => {
             <button type="submit" className="button">
               Ingresar
             </button>
+            <label className="label label-checkbox" name="remember">
+              {' '}
+              <Field name="remember" type="checkbox" />
+              Recuérdame
+            </label>
           </Form>
         </div>
         <span className="link-auth">
