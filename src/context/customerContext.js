@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getClient, getClients, getInterest } from '../helpers';
+import { getClient, getClients } from '../helpers';
 import { useResize } from '../hook/useResize';
 import { useNavigate } from 'react-router-dom';
 export const CustomerContext = createContext();
@@ -31,10 +31,6 @@ const CustomerProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getInterest(setInterest);
-  }, []);
-
-  useEffect(() => {
     if (searchClient.nombre || searchClient.identificacion) {
       setRenderList(
         renderList.filter(
@@ -51,13 +47,6 @@ const CustomerProvider = ({ children }) => {
     }
   }, [searchClient]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
-    const res = await getClients();
-    setRenderList(res);
-    setClients(res);
-  }, []);
-
   useEffect(() => {
     !isPhone && setShow(true);
   }, [isPhone]);
@@ -66,6 +55,7 @@ const CustomerProvider = ({ children }) => {
     <CustomerContext.Provider
       value={{
         interest,
+        setInterest,
         show,
         setShow,
         renderList,
@@ -83,6 +73,9 @@ const CustomerProvider = ({ children }) => {
 
 export function useInterest() {
   return useContext(CustomerContext).interest;
+}
+export function useSetInterest() {
+  return useContext(CustomerContext).setInterest;
 }
 export function useClients() {
   return useContext(CustomerContext).clients;

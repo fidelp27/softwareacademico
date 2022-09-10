@@ -85,7 +85,7 @@ export const getClients = async () => {
 };
 
 // Intereses
-export const getInterest = (fn) => {
+export const getInterest = async () => {
   let config = {
     method: 'get',
     url: `${process.env.REACT_APP_API_ENDPOINT}api/Intereses/Listado`,
@@ -95,13 +95,8 @@ export const getInterest = (fn) => {
     },
   };
 
-  axios(config)
-    .then(function (response) {
-      fn(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  const res = await axios(config);
+  return res.data;
 };
 
 //Delete

@@ -6,12 +6,23 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './auth.css';
 import { useSetToken, useSetUser } from '../../context/authContext';
-import { getAuth } from '../../helpers';
+import { getAuth, getInterest } from '../../helpers';
+import {
+  useRenderClients,
+  useSetInterest,
+} from '../../context/customerContext';
 
 const Login = () => {
   const navigate = useNavigate();
   const setToken = useSetToken();
   const setUser = useSetUser();
+  const setInterest = useSetInterest();
+  const renderClients = useRenderClients();
+
+  const getListInterest = async () => {
+    const resp = await getInterest();
+    setInterest(resp);
+  };
 
   const saveLocalStorage = async (values) => {
     try {
@@ -21,6 +32,8 @@ const Login = () => {
       localStorage.setItem('userid', res?.data?.userid);
       setToken(localStorage.getItem('token'));
       setUser(localStorage.getItem('user'));
+      getListInterest();
+      renderClients();
       navigate('/', { replace: true });
     } catch (error) {
       error &&
