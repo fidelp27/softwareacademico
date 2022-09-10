@@ -129,9 +129,11 @@ const FormCreateClient = () => {
           .required('Campo obligatorio')
           .max(20, 'Este campo admite hasta 20 caracteres'),
         celular: Yup.string()
+          .matches(/^[0-9]+$/, 'Solo se admiten números')
           .required('Campo obligatorio')
           .max(20, 'Este campo admite hasta 20 caracteres'),
         otroTelefono: Yup.string()
+          .matches(/^[0-9]+$/, 'Solo se admiten números')
           .required('Campo obligatorio')
           .max(20, 'Este campo admite hasta 20 caracteres'),
         direccion: Yup.string()
