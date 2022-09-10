@@ -1,7 +1,7 @@
 {
-  "name": "softwareacademico",
+  "name": "softwareacademicoclass",
   "version": "0.1.0",
-  "homepage": "https://fidelp27.github.io/softwareacademicoclass/",
+  "homepage": "https://fidelp27.github.io/softwareacademico",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
