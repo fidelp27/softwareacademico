@@ -29,7 +29,6 @@ export const onRegister = async (values) => {
     data: data,
   };
   const res = await axios(config);
-  console.log(res);
   return res;
 };
 
@@ -138,7 +137,6 @@ export const getClient = async (id) => {
     data: data,
   };
   const res = await axios(config);
-  console.log(res.data);
   return res.data;
 };
 //Actualizar clientes
@@ -170,6 +168,5 @@ export const updateClientAxios = async (values) => {
     data: data,
   };
   const res = await axios(config);
-  console.log(res);
   return res;
 };

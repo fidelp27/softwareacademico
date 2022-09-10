@@ -19,7 +19,6 @@ import { deleteClient } from '../../../helpers';
 import { ToastContainer, toast } from 'react-toastify';
 import Alert from '../../alert/alert';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -50,7 +49,6 @@ export default function TableClients() {
   const renderClients = useRenderClients();
   const [isOpen, setIsOpen] = useState(false);
   const getDataClient = useGetDataClient();
-  const navigate = useNavigate();
 
   const closeAlert = () => {
     setIsOpen(false);
@@ -88,7 +86,7 @@ export default function TableClients() {
         });
     }
   };
-  console.log(renderList);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">

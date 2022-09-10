@@ -15,13 +15,11 @@ import { useNavigate } from 'react-router-dom';
 
 const FormCreateClient = () => {
   const date = new Date().toLocaleDateString('fr-CA');
-  console.log(typeof date);
   const intereses = useInterest();
   const renderClients = useRenderClients();
   const navigate = useNavigate();
   const dataClient = useDataClient();
   const setDataClient = useSetDataClient();
-  console.log(dataClient);
   const createClient = (values) => {
     postCreateClient(values)
       .then(
@@ -151,7 +149,6 @@ const FormCreateClient = () => {
       })}
       onSubmit={(values, { resetForm }) => {
         dataClient ? updateClient(values) : createClient(values);
-        console.log(values);
         resetForm();
       }}
     >

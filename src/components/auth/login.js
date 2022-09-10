@@ -16,7 +16,6 @@ const Login = () => {
   const saveLocalStorage = async (values) => {
     try {
       const res = await getAuth(values);
-      console.log(res);
       localStorage.setItem('token', res?.data?.token);
       localStorage.setItem('user', res?.data?.username);
       localStorage.setItem('userid', res?.data?.userid);

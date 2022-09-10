@@ -27,8 +27,7 @@ const CustomerProvider = ({ children }) => {
   const getDataClient = (id) => {
     getClient(id)
       .then((resp) => setDataClient(resp))
-      .then(() => navigate('/modifyClient'))
-      .catch((error) => console.log(error));
+      .then(() => navigate('/modifyClient'));
   };
 
   useEffect(() => {
