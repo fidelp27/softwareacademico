@@ -31,3 +31,10 @@
   padding: 0;
 
 }
+
+@media (max-width: 640px) {
+  .aside-container {
+    width: 100vw;
+    ;
+  }
+}
