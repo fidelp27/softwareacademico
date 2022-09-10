@@ -32,7 +32,6 @@
 }
 
 .photo-container {
-    width: 150px;
     height: 200px;
     display: flex;
     justify-content: center;
@@ -56,5 +55,11 @@
     .aside-container {
         width: 100vw;
         z-index: 1;
+    }
+}
+
+@media (min-width: 641px) {
+    .aside-container {
+        display: flex;
     }
 }

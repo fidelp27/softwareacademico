@@ -4,9 +4,11 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import SaveIcon from '@mui/icons-material/Save';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
+import { useSetDataClient } from '../../../context/customerContext';
 
 export default function ButtonCreate() {
   const navigate = useNavigate();
+  const setDataClient = useSetDataClient();
 
   return (
     <Stack direction="row" spacing={2}>
@@ -16,7 +18,10 @@ export default function ButtonCreate() {
       <Button
         variant="outlined"
         startIcon={<ArrowCircleLeftIcon />}
-        onClick={() => navigate('/')}
+        onClick={() => {
+          setDataClient('');
+          navigate('/clients');
+        }}
       >
         Regresar
       </Button>

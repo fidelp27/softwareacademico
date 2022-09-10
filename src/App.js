@@ -8,6 +8,7 @@ import Navbar from './components/nav';
 import AsideMenu from './components/aside/aside';
 import CreateClients from './components/createClient/index';
 import ViewClients from './views/viewClients.js';
+import { useDataClient } from './context/customerContext';
 
 export const RequiredAuth = ({ children }) => {
   if (!localStorage.getItem('token')) {
@@ -18,6 +19,7 @@ export const RequiredAuth = ({ children }) => {
 };
 
 function App() {
+  const dataClient = useDataClient();
   return (
     <>
       <Navbar />
@@ -44,6 +46,10 @@ function App() {
             }
           />
           <Route path="/createClient" element={<CreateClients />} />
+          <Route
+            path="/modifyClient"
+            element={<CreateClients data={dataClient} />}
+          />
         </Routes>
       </div>
     </>

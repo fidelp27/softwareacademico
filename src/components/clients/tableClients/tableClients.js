@@ -7,11 +7,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useClients } from '../../../context/customerContext';
-import { useEffect } from 'react';
+import {
+  useGetDataClient,
+  useRenderClients,
+  useRenderList,
+} from '../../../context/customerContext';
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { deleteClient, getClients } from '../../../helpers';
+import { deleteClient } from '../../../helpers';
+import { ToastContainer, toast } from 'react-toastify';
+import Alert from '../../alert/alert';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,55 +45,50 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  id: string,
-  identificacion: number,
-  nombre: string,
-  apellidos: string,
-  acciones: string
-) {
-  return { id, identificacion, nombre, apellidos, acciones: id };
-}
-
-const rows = [];
-
 export default function TableClients() {
-  const clients = useClients();
-  console.log(clients);
+  const renderList = useRenderList();
+  const renderClients = useRenderClients();
+  const [isOpen, setIsOpen] = useState(false);
+  const getDataClient = useGetDataClient();
+  const navigate = useNavigate();
 
-  // const headersTable = [
-  //   ...new Set(
-  //     React.Children.toArray(clients.map((elem) => Object.keys(elem)))
-  //   ),
-  // ];
+  const closeAlert = () => {
+    setIsOpen(false);
+  };
+  const openAlert = () => {
+    setIsOpen(true);
+  };
 
   const onDelete = async (id) => {
     try {
       const res = await deleteClient(id);
-      console.log(res);
+      if (res.status === 200) {
+        renderClients();
+        toast.success('Cliente eliminado exitosamente', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+      setIsOpen(false);
     } catch (error) {
-      console.log(error);
+      error &&
+        toast.error('Hubo un error, ya estamos trabajando en la solución', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
     }
   };
-  const renderTable = async () => {
-    const res = await getClients();
-    React.Children.toArray(
-      clients.map((client) => {
-        return rows.push(
-          createData(
-            client.id,
-            client.identificacion,
-            client.nombre,
-            client.apellidos
-          )
-        );
-      })
-    );
-  };
-  useEffect(() => {
-    renderTable();
-  }, []);
-
+  console.log(renderList);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -99,24 +102,42 @@ export default function TableClients() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {renderList?.map((row) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.id}
               </StyledTableCell>
-              <StyledTableCell align="right">
+              <StyledTableCell align="center">
                 {row.identificacion}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.nombre}</StyledTableCell>
-              <StyledTableCell align="right">{row.apellidos}</StyledTableCell>
+              <StyledTableCell align="center">{row.nombre}</StyledTableCell>
+              <StyledTableCell align="center">{row.apellidos}</StyledTableCell>
               <StyledTableCell align="center">
-                <EditIcon onClick={console.log('hola')} />
-                <DeleteIcon onClick={() => onDelete(row.acciones)} />
+                <EditIcon onClick={() => getDataClient(row.id)} />
+                <DeleteIcon onClick={() => openAlert()} />
+                {isOpen && (
+                  <Alert
+                    nombre={row.nombre}
+                    fnOpen={() => onDelete(row.id)}
+                    fnClose={() => closeAlert()}
+                  />
+                )}
               </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
+      <ToastContainer
+        position="top-center"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />{' '}
     </TableContainer>
   );
 }

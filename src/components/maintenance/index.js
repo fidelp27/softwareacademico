@@ -3,48 +3,120 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import './maintenance.css';
 import ButtonCreate from '../clients/buttonAction/create';
-import { useInterest, useRenderClients } from '../../context/customerContext';
-import { postCreateClient } from '../../helpers';
+import {
+  useDataClient,
+  useInterest,
+  useRenderClients,
+  useSetDataClient,
+} from '../../context/customerContext';
+import { postCreateClient, updateClientAxios } from '../../helpers';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const FormCreateClient = () => {
   const date = new Date().toLocaleDateString('fr-CA');
+  console.log(typeof date);
   const intereses = useInterest();
   const renderClients = useRenderClients();
+  const navigate = useNavigate();
+  const dataClient = useDataClient();
+  const setDataClient = useSetDataClient();
+  console.log(dataClient);
+  const createClient = (values) => {
+    postCreateClient(values)
+      .then(
+        (res) =>
+          res.status === 200 &&
+          toast.success(
+            'Cliente creado satisfactoriamente',
+            {
+              position: 'top-center',
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            } && setTimeout(() => navigate('/clients'), 2000)
+          )
+      )
+      .then(() => {
+        renderClients();
+      })
+      .catch(
+        (error) =>
+          error &&
+          toast.error(
+            'El cliente no pudo ser creado, intenta de vuelta por favor',
+            {
+              position: 'top-center',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          )
+      );
+  };
 
-  const createClient = async (values) => {
-    try {
-      const res = await postCreateClient(values);
-      res.status === 200 &&
-        toast.success('Cliente creado satisfactoriamente', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-    } catch (error) {
-      console.log(error);
-    }
+  const updateClient = (values) => {
+    updateClientAxios(values)
+      .then(
+        (res) =>
+          res.status === 200 &&
+          toast.success('Cliente actualizado satisfactoriamente', {
+            position: 'top-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+      )
+      .then(() => {
+        renderClients();
+        setDataClient('');
+        setTimeout(() => navigate('/clients'), 2000);
+      })
+      .catch(
+        (error) =>
+          error &&
+          toast.error(
+            'El cliente no pudo ser creado, intenta de vuelta por favor',
+            {
+              position: 'top-center',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          )
+      );
   };
 
   return (
     <Formik
       initialValues={{
-        nombre: '',
-        apellidos: '',
-        identificacion: '',
-        celular: '',
-        otroTelefono: '',
-        direccion: '',
-        fNacimiento: '',
-        fAfiliacion: date,
-        sexo: '',
-        resennaPersonal: '',
-        imagen: '',
-        interesFK: '',
+        id: dataClient?.id || '',
+        nombre: dataClient?.nombre || '',
+        apellidos: dataClient?.apellidos || '',
+        identificacion: dataClient?.identificacion || '',
+        celular: dataClient?.telefonoCelular || '',
+        otroTelefono: dataClient?.otroTelefono || '',
+        direccion: dataClient?.direccion || '',
+        fNacimiento:
+          new Date(dataClient?.fNacimiento).toLocaleDateString('fr-CA') || '',
+        fAfiliacion:
+          new Date(dataClient?.fAfiliacion).toLocaleDateString('fr-CA') || date,
+        sexo: dataClient?.sexo || '',
+        resennaPersonal: dataClient?.resenaPersonal || '',
+        imagen: dataClient?.imagen || '',
+        interesFK: dataClient?.interesesId || '',
         usuarioId: localStorage.getItem('userid'),
       }}
       validationSchema={Yup.object({
@@ -78,8 +150,8 @@ const FormCreateClient = () => {
         ),
       })}
       onSubmit={(values, { resetForm }) => {
-        createClient(values);
-        renderClients();
+        dataClient ? updateClient(values) : createClient(values);
+        console.log(values);
         resetForm();
       }}
     >

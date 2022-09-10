@@ -6,6 +6,7 @@
 
 .view-clients-container {
     width: calc(100vw - 300px);
+    height: 90vh;
     overflow-y: hidden;
     background-color: var(--soft);
 }
@@ -27,7 +28,7 @@
 .table-container {
     margin: 0 auto;
     max-height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .table-container::-webkit-scrollbar {
@@ -44,15 +45,52 @@
     border: 3px solid var(--primary);
 }
 
+.css-i4bv87-MuiSvgIcon-root {
+    cursor: pointer;
+}
+
 @media (max-width: 640px) {
 
     .title-container,
     .search-container,
     .table-container {
-        width: 100vw;
+
+        z-index: 0;
     }
 
     .view-clients-container {
-        width: 100vw;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        z-index: 0;
     }
+
+    .title-container {
+        width: auto;
+        font-size: var(--xs);
+        padding: 1rem 0;
+        margin: 0;
+        text-align: start;
+    }
+
+    .search-container {
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin: 2rem 0 1rem 0;
+    }
+
+    .search-container input {
+        width: 300px;
+        margin: .5rem 0;
+    }
+
+    .table-container {
+        display: flex;
+        width: 400px;
+        overflow-y: auto;
+        margin-top: 2rem;
+
+    }
+
 }

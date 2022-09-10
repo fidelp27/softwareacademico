@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
     localStorage.clear();
     navigate('/login');
   };
-  console.log(user);
+
   useEffect(() => {
     token && setIsAuth(true);
     localStorage.getItem('user') && setUser(localStorage.getItem('user'));

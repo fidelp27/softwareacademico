@@ -10,7 +10,6 @@ const ViewClients = () => {
   const navigate = useNavigate();
   const toFormCreate = () => {
     navigate('/createClient');
-    console.log('hi');
   };
 
   return (

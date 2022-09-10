@@ -1,0 +1,32 @@
+.container-alert {
+    width: 300px;
+    height: 250px;
+    background-color: var(--primary);
+    opacity: 0.9;
+    position: absolute;
+    top: 200px;
+    right: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--white);
+}
+
+.container-alert h1 {
+    letter-spacing: 1px;
+    font-size: var(--md);
+    color: var(--white);
+}
+
+.container-alert button {
+    background-color: var(--secondary);
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--white);
+    cursor: pointer;
+    padding: .5rem;
+    width: 50px;
+    margin: 5px 0;
+}

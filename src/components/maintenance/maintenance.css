@@ -1,9 +1,9 @@
 .form-container--data {
-    width: calc(100vw - 300px);
+    width: calc(100vw - 400px);
 }
 
 .form-container--data .form {
-    width: calc(100vw - 300px);
+    width: calc(100vw - 400px);
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -30,15 +30,25 @@
 }
 
 
-
-.form-container--data .form .input-group .input-textarea {
-    width: 860px;
-    height: 100px;
-}
-
 .form-container--data .form .input-group--textarea {
-    width: 100%;
+    display: flex;
+    width: 850px;
+    margin: 2rem 0 0 1.8rem;
 }
+
+.form-container--data .form .input-group--textarea .input-textarea {
+    width: 850px;
+}
+
+.form-container--data .form .input-group .input-address {
+    width: 850px;
+    margin: 1rem 0 0 1.8rem;
+}
+
+.form-container--data .form .input-group .input-address input {
+    margin-left: 5rem;
+}
+
 
 .form-container--data .form .input-group--select label {
     margin-right: .5rem;
@@ -56,6 +66,55 @@
 
 .css-e53awj-MuiStack-root {
     position: absolute;
-    top: 210px;
+    top: 100px;
     right: 40px;
+}
+
+@media (max-width: 640px) {
+    .css-e53awj-MuiStack-root {
+        top: 130px
+    }
+
+    .form-container--data .form {
+
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+    }
+
+    .form-container--data .form .input-group {
+        width: 220px;
+
+    }
+
+    .form-container--data .form .input-group .input-textarea {
+        width: 300px;
+        height: 100px;
+    }
+
+    .form-container--data .form .input-group .input-address {
+        width: 250px;
+        margin: 1rem 0 0 0;
+    }
+
+    .form-container--data .form .input-group .input-address input {
+        margin-left: 5rem;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1299px) {
+    .form-container--data .form .input-group .input-address {
+        width: 250px;
+        margin: 1rem 0 0 0;
+    }
+
+    .form-container--data .form .input-group .input-textarea {
+        width: 250px;
+        height: 100px;
+
+    }
+
+    .form-container--data .form .input-group--textarea {
+        margin: 0 0 0 1.8rem;
+    }
 }

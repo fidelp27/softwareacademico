@@ -1,6 +1,7 @@
 import React from 'react';
 import { useIsAuth, useLogOut, useUser } from '../../context/authContext';
 import { useSetShow, useShow } from '../../context/customerContext';
+import { useResize } from '../../hook/useResize';
 import './navbar.css';
 
 const Navbar = () => {
@@ -9,6 +10,7 @@ const Navbar = () => {
   const user = useUser();
   const setShow = useSetShow();
   const show = useShow();
+  const { isPhone } = useResize();
 
   return (
     <>
@@ -19,7 +21,7 @@ const Navbar = () => {
               src="https://i.imgur.com/fqz0lxJ.png"
               alt="menu-hamburger"
               className="menu-icon"
-              onClick={() => setShow(!show)}
+              onClick={() => isPhone && setShow(!show)}
             />
             <h1>Empresa</h1>
             <div className="user-container">

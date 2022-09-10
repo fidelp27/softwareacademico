@@ -27,3 +27,10 @@
     margin: 0 auto;
 
 }
+
+@media (max-width: 640px) {
+    .view-clients-container {
+        justify-content: start;
+        z-index: -1;
+    }
+}
