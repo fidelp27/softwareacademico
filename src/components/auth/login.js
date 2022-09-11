@@ -42,7 +42,7 @@ const Login = () => {
       navigate('/', { replace: true });
     } catch (error) {
       error &&
-        toast.error('Usuario no autorizado, por favor regístrate', {
+        toast.error('Usuario no autorizado, por favor regístrate ', {
           position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
@@ -59,15 +59,15 @@ const Login = () => {
       initialValues={{
         usuario: localStorage.getItem('userName') || '',
         contraseña: '',
-        remember: false,
       }}
       validationSchema={Yup.object({
         usuario: Yup.string().required('Campo obligatorio'),
         contraseña: Yup.string().required('Campo obligatorio'),
       })}
       onSubmit={(values, { resetForm }) => {
+        console.log(values);
         saveLocalStorage(values);
-        rememberUser(values);
+        // rememberUser(values);
         resetForm();
       }}
     >

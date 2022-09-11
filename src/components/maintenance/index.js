@@ -268,6 +268,14 @@ const FormCreateClient = () => {
                 {(msg) => <div className="error">{msg}</div>}
               </ErrorMessage>
             </div>
+            {/* <div className="input-group">
+              <Field
+                name="direccion"
+                type="file"
+                className="input input-address"
+                placeholder="Dirección*"
+              />
+            </div> */}
             <ButtonCreate />
           </Form>
           <ToastContainer

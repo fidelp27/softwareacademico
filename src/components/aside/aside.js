@@ -10,16 +10,15 @@ const AsideMenu = () => {
   const show = useShow();
 
   return (
+    isAuth &&
     show && (
       <aside className="aside-container">
-        {isAuth && (
-          <>
-            <PhotoContainer />
-            <h1>Menu</h1>
-            <Link to="/">Inicio</Link>
-            <Link to="/clients">Consulta Clientes</Link>
-          </>
-        )}
+        <>
+          <PhotoContainer />
+          <h1>Menu</h1>
+          <Link to="/">Inicio</Link>
+          <Link to="/clients">Consulta Clientes</Link>
+        </>
       </aside>
     )
   );
