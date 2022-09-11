@@ -11,7 +11,6 @@ import {
   useRenderClients,
   useSetInterest,
 } from '../../context/customerContext';
-import { useState } from 'react';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -65,9 +64,8 @@ const Login = () => {
         contraseña: Yup.string().required('Campo obligatorio'),
       })}
       onSubmit={(values, { resetForm }) => {
-        console.log(values);
         saveLocalStorage(values);
-        // rememberUser(values);
+        rememberUser(values);
         resetForm();
       }}
     >

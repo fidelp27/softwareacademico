@@ -9,6 +9,7 @@ export const getAuth = async (values) => {
       password: values.contraseña,
     }
   );
+  console.log(res);
   return res;
 };
 
@@ -29,6 +30,7 @@ export const onRegister = async (values) => {
     data: data,
   };
   const res = await axios(config);
+  console.log(res);
   return res;
 };
 
