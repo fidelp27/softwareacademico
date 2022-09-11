@@ -11,6 +11,7 @@ import {
   useRenderClients,
   useSetInterest,
 } from '../../context/customerContext';
+import { useState } from 'react';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Login = () => {
   const setUser = useSetUser();
   const setInterest = useSetInterest();
   const renderClients = useRenderClients();
+  const [rememberActive, setRemembrActive] = useState(false);
 
   const getListInterest = async () => {
     const resp = await getInterest();
@@ -25,8 +27,9 @@ const Login = () => {
   };
 
   const rememberUser = (values) => {
-    values.remember && localStorage.setItem('userName', values.usuario);
+    rememberActive && localStorage.setItem('userName', values.usuario);
   };
+  console.log(rememberActive);
 
   const saveLocalStorage = async (values) => {
     try {
@@ -41,7 +44,7 @@ const Login = () => {
       navigate('/', { replace: true });
     } catch (error) {
       error &&
-        toast.error('Usuario no autorizado, por favor regístrate ', {
+        toast.error('Hubo un error, por favor intente de nuevo', {
           position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
@@ -94,8 +97,13 @@ const Login = () => {
             </button>
             <label className="label label-checkbox" name="remember">
               {' '}
-              <Field name="remember" type="checkbox" />
-              Recuérdame
+              <input
+                name="remember"
+                type="checkbox"
+                value={rememberActive}
+                onChange={() => setRemembrActive(!rememberActive)}
+              />
+              Recuérdame{' '}
             </label>
           </Form>
         </div>

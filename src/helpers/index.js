@@ -2,13 +2,20 @@ import axios from 'axios';
 
 // Login usuario
 export const getAuth = async (values) => {
-  const res = await axios.post(
-    `${process.env.REACT_APP_API_ENDPOINT}api/Authenticate/login`,
-    {
-      username: values.usuario,
-      password: values.contraseña,
-    }
-  );
+  let data = JSON.stringify({
+    username: values.usuario,
+    password: values.contraseña,
+  });
+  let config = {
+    method: 'post',
+    url: `${process.env.REACT_APP_API_ENDPOINT}api/Authenticate/login`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: data,
+  };
+
+  const res = await axios(config);
   console.log(res);
   return res;
 };
@@ -30,7 +37,6 @@ export const onRegister = async (values) => {
     data: data,
   };
   const res = await axios(config);
-  console.log(res);
   return res;
 };
 

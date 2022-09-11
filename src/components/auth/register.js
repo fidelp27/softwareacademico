@@ -24,7 +24,7 @@ const Register = () => {
         });
     } catch (error) {
       error &&
-        toast.error('Usuario ya existente', {
+        toast.error('Error en la solicitud, intenta de nuevo', {
           position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
